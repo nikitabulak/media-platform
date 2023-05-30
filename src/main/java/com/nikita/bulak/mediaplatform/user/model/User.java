@@ -40,6 +40,13 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "friend_id")}
     )
     private Set<User> friends = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "friendship_requests",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "requesting_friend_id")}
+    )
+    private Set<User> requestedFriends = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

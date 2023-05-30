@@ -1,15 +1,28 @@
 package com.nikita.bulak.mediaplatform.user.service;
 
-import com.nikita.bulak.mediaplatform.user.model.User;
+import com.nikita.bulak.mediaplatform.user.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
-    User getUserById(Long id);
+    Boolean createFriendsRequest(Long requestingFriendId);
 
-    User getUserByUsername(String username);
+    List<UserDto> getIncomingFriendsRequests();
 
-    List<User> getAllUsers();
+    List<UserDto> getOutgoingFriendsRequests();
 
-    boolean deleteUser(Long id);
+    Boolean acceptFriendsRequest(Long acceptingFriendId);
+
+    Boolean declineFriendsRequest(Long decliningFriendId);
+
+    Boolean removeFriend(Long friendId);
+
+    Boolean removeSubscription(Long authorId);
+//    User getUserById(Long id);
+//
+//    User getUserByUsername(String username);
+//
+//    List<User> getAllUsers();
+//
+//    boolean deleteUser(Long id);
 }

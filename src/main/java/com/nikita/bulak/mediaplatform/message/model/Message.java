@@ -2,6 +2,7 @@ package com.nikita.bulak.mediaplatform.message.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nikita.bulak.mediaplatform.user.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "messages")
 public class Message {

@@ -65,9 +65,9 @@ CREATE TABLE SUBSCRIPTIONS
 CREATE TABLE FRIENDSHIP_REQUESTS
 (
     user_id bigint REFERENCES USERS (id) ON DELETE CASCADE,
-    friend_id bigint REFERENCES USERS (id) ON DELETE CASCADE,
-    confirmed boolean,
-    CONSTRAINT pk_friendship_requests PRIMARY KEY (user_id, friend_id)
+    requesting_friend_id bigint REFERENCES USERS (id) ON DELETE CASCADE,
+--     confirmed boolean,
+    CONSTRAINT pk_friendship_requests PRIMARY KEY (user_id, requesting_friend_id)
 
 );
 
