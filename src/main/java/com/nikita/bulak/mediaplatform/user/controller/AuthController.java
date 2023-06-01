@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class AuthController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authUser(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<?> authUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
@@ -62,7 +63,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequestDto signupRequestDto) {
         if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -78,7 +79,7 @@ public class AuthController {
         User user = new User(signupRequestDto.getUsername(),
                 passwordEncoder.encode(signupRequestDto.getPassword()),
                 signupRequestDto.getEmail()
-                );
+        );
 
         Set<String> reqRoles = signupRequestDto.getRoles();
         Set<Role> roles = new HashSet<>();

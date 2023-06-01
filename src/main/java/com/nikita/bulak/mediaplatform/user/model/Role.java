@@ -1,5 +1,6 @@
 package com.nikita.bulak.mediaplatform.user.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -17,22 +19,6 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Enumerated(EnumType.STRING)
     private ERole name;
-//    @Transient
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<User> users;
-
-    public Role(Long id) {
-        this.id = id;
-    }
-
-    public Role(ERole name) {
-        this.name = name;
-    }
-
-    public Role(Long id, ERole name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @Override
     public String getAuthority() {
