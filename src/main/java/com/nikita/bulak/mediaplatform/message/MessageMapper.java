@@ -4,6 +4,8 @@ import com.nikita.bulak.mediaplatform.message.dto.MessageDto;
 import com.nikita.bulak.mediaplatform.message.model.Message;
 import com.nikita.bulak.mediaplatform.user.model.User;
 
+import java.time.LocalDateTime;
+
 public class MessageMapper {
     public static MessageDto toMessageDto(Message message) {
         return new MessageDto(message.getId(),
@@ -17,7 +19,7 @@ public class MessageMapper {
         return new Message(0L,
                 author,
                 recipient,
-                messageDto.getCreationDate(),
+                LocalDateTime.now(),
                 messageDto.getText());
     }
 }

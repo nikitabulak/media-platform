@@ -33,9 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getIncomingFriendsRequests() {
-        return userRepository.findByRequestedFriendsIdContains(AuthUtils.getCurrentUserId()).stream()
-                .map(UserMapper::toUserDto)
-                .collect(Collectors.toList());
+        User user = userRepository.findById(AuthUtils.getCurrentUserId()).get();
+        return user.getRequestingFriends().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
     }
 
     @Override
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
             user.getFriends().add(requestingFriend);
             user.getAuthors().add(requestingFriend);
             requestingFriend.getFriends().add(user);
-            requestingFriend.getAuthors().add(user);
+            requestingFriend.getRequestedFriends().remove(user);
             userRepository.save(user);
             userRepository.save(requestingFriend);
             return true;
@@ -84,7 +83,9 @@ public class UserServiceImpl implements UserService {
         User deletedFriend = userRepository.findById(friendId)
                 .orElseThrow(() -> new UserNotFoundException("There is no user with id = " + friendId));
         if (user.getFriends().contains(deletedFriend)) {
-            user.getRequestedFriends().remove(deletedFriend);
+            user.getFriends().remove(deletedFriend);
+            user.getAuthors().remove(deletedFriend);
+            deletedFriend.getFriends().remove(user);
             userRepository.save(user);
             return true;
         } else {
@@ -108,28 +109,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    //    @Override
-//    public User getUserById(Long userId) {
-//        Optional<User> userFromDb = userRepository.findById(userId);
-//        return userFromDb.orElse(new User());
-//    }
-//
-//    @Override
-//    public User getUserByUsername(String username) {
-//        return userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь с username %s не найден", username)));
-//    }
-//
-//    @Override
-//    public List<User> getAllUsers() {
-//        return userRepository.findAll();
-//    }
-//
-//    @Override
-//    public boolean deleteUser(Long userId) {
-//        if (userRepository.findById(userId).isPresent()) {
-//            userRepository.deleteById(userId);
-//            return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public UserDto getCurrentUser() {
+        User user = userRepository.findById(AuthUtils.getCurrentUserId()).get();
+        return UserMapper.toUserDto(user);
+    }
 }

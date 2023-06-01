@@ -3,6 +3,7 @@ package com.nikita.bulak.mediaplatform.post;
 import com.nikita.bulak.mediaplatform.post.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,8 +14,9 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/create")
-    public PostDto createNewPost(@RequestBody PostDto postDto) {
-        return postService.createPost(postDto);
+    public PostDto createNewPost(@RequestParam String postDtoString,
+                                 @RequestParam(required = false) MultipartFile file) {
+        return postService.createPost(postDtoString, file);
     }
 
     @GetMapping("/get/{userId}")
@@ -25,12 +27,14 @@ public class PostController {
     }
 
     @PatchMapping("/update")
-    public PostDto updateExistingPost(@RequestParam Long postId, @RequestBody PostDto postDto) {
-        return postService.updatePost(postId, postDto);
+    public PostDto updateExistingPost(@RequestParam Long postId,
+                                      @RequestParam String postDtoString,
+                                      @RequestParam(required = false) MultipartFile file) {
+        return postService.updatePost(postId, postDtoString, file);
     }
 
     @DeleteMapping("/delete")
-    public boolean deleteExistingPost(@RequestParam Long postId){
+    public boolean deleteExistingPost(@RequestParam Long postId) {
         return postService.deletePost(postId);
     }
 }

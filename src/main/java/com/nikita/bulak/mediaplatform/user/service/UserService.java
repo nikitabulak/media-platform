@@ -18,11 +18,6 @@ public interface UserService {
     Boolean removeFriend(Long friendId);
 
     Boolean removeSubscription(Long authorId);
-//    User getUserById(Long id);
-//
-//    User getUserByUsername(String username);
-//
-//    List<User> getAllUsers();
-//
-//    boolean deleteUser(Long id);
+
+    UserDto getCurrentUser();
 }

@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    List<Message> getMessagesByAuthorIdAndRecipientId(Long authorId, Long recipientId);
+    List<Message> getMessagesByAuthorIdAndRecipientIdOrAuthorIdAndRecipientId(Long authorId1,
+                                                                              Long recipientId1,
+                                                                              Long authorId2,
+                                                                              Long recipientId2);
 }

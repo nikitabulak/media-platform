@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByAuthorId(Long authorId, Pageable pageable);
-    List<Post> findAllByAuthorIdIn(List<Long> authorIds, Pageable pageable);
+
+    List<Post> findByAuthorIdIn(List<Long> authorIds, Pageable pageable);
 }

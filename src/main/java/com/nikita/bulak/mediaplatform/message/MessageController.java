@@ -4,6 +4,7 @@ import com.nikita.bulak.mediaplatform.message.dto.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,7 +14,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping("/message")
-    public Boolean sendMessage(@RequestBody MessageDto messageDto) {
+    public MessageDto sendMessage(@Valid @RequestBody MessageDto messageDto) {
         return messageService.createMessage(messageDto);
     }
 

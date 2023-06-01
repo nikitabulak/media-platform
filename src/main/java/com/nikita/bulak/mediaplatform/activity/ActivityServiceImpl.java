@@ -24,15 +24,15 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public List<PostDto> getActivity(Integer from, Integer size, String sort) {
         User user = userRepository.findById(AuthUtils.getCurrentUserId()).get();
-        Sort currentSort = Sort.by("creation_date");
+        Sort currentSort = Sort.by("creationDate");
         currentSort = (sort.equals("asc") || sort.equals("ascending")) ? currentSort.ascending() : currentSort.descending();
-        List<Post> authorsPosts = postRepository.findAllByAuthorIdIn(
+        List<Post> authorsPosts = postRepository.findByAuthorIdIn(
                 user.getAuthors().stream()
                         .map(User::getId)
                         .collect(Collectors.toList()),
                 OffsetLimitPageable.of(from, size, currentSort));
         return authorsPosts.stream()
-                .map(PostMapper::toPostDto)
+                .map(x -> PostMapper.toPostDto(x, x.getImageFilePath()))
                 .collect(Collectors.toList());
     }
 }

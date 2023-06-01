@@ -24,8 +24,8 @@ public class Post {
     private User author;
     private String header;
     private String text;
-    //todo
-    private String imageName;
+    @Column(name = "image_file_path")
+    private String imageFilePath;
     @Column(name = "creation_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
