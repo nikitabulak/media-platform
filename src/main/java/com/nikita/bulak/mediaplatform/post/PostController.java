@@ -13,27 +13,27 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping("/create")
+    @PostMapping
     public PostDto createNewPost(@RequestParam String postDtoString,
                                  @RequestParam(required = false) MultipartFile file) {
         return postService.createPost(postDtoString, file);
     }
 
-    @GetMapping("/get/{userId}")
+    @GetMapping("/{userId}")
     public List<PostDto> getUsersPosts(@PathVariable Long userId,
                                        @RequestParam(required = false, defaultValue = "0") Integer from,
                                        @RequestParam(required = false, defaultValue = "10") Integer size) {
         return postService.getUsersPosts(userId, from, size);
     }
 
-    @PatchMapping("/update")
+    @PatchMapping
     public PostDto updateExistingPost(@RequestParam Long postId,
                                       @RequestParam String postDtoString,
                                       @RequestParam(required = false) MultipartFile file) {
         return postService.updatePost(postId, postDtoString, file);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public boolean deleteExistingPost(@RequestParam Long postId) {
         return postService.deletePost(postId);
     }

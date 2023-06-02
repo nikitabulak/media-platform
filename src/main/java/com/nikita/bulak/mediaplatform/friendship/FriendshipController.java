@@ -13,22 +13,22 @@ import java.util.List;
 public class FriendshipController {
     private final UserService userService;
 
-    @PostMapping("/new")
+    @PostMapping
     public Boolean createFriendsRequest(@RequestParam Long requestingFriendId) {
         return userService.createFriendsRequest(requestingFriendId);
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public UserDto getUserInfo() {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/get/incoming")
+    @GetMapping("/incoming")
     public List<UserDto> getIncomingFriendsRequests() {
         return userService.getIncomingFriendsRequests();
     }
 
-    @GetMapping("/get/outgoing")
+    @GetMapping("/outgoing")
     public List<UserDto> getOutgoingFriendsRequests() {
         return userService.getOutgoingFriendsRequests();
     }

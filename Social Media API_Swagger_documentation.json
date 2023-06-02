@@ -1,0 +1,748 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "Documentation Social Media API v1.0",
+    "title": "Social Media API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "description": "Server url",
+      "url": "http://localhost:8080"
+    }
+  ],
+  "tags": [
+    {
+      "description": "Публичный API для регистрации и авторизации пользователей",
+      "name": "Public: Регистрация и авторизация"
+    },
+    {
+      "description": "API для работы с постами авторизованного пользователя",
+      "name": "Private (User): Posts"
+    },
+    {
+      "description": "API для работы с запросами на дружбу и друзьями авторизованного пользователя",
+      "name": "Private (User): Friendship"
+    },
+    {
+      "description": "API для работы с сообщениями авторизованного пользователя",
+      "name": "Private (User): Message"
+    },
+    {
+      "description": "API для работы с лентой активности",
+      "name": "Private (User): Activity"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "description": "Авторизация зарегистрированного пользователя",
+        "operationId": "authUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDto"
+              }
+            }
+          },
+          "description": "Данные авторизуемого пользователя",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponseDto"
+                }
+              }
+            },
+            "description": "Пользователь авторизован"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginError"
+                }
+              }
+            },
+            "description": "Запрос составлен некорректно"
+          }
+        },
+        "summary": "Авторизация пользователя",
+        "tags": [
+          "Public: Регистрация и авторизация"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "Регистрация нового пользователя.",
+        "operationId": "registerUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequestDto"
+              }
+            }
+          },
+          "description": "Данные регистрируемого пользователя",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterMessage"
+                }
+              }
+            },
+            "description": "Пользователь зарегистрирован"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterError"
+                }
+              }
+            },
+            "description": "Регистрация пользователя с данными параметрами невозможна"
+          }
+        },
+        "summary": "Регистрация пользователя",
+        "tags": [
+          "Public: Регистрация и авторизация"
+        ]
+      }
+    },
+    "/users/posts": {
+      "post": {
+        "description": "Cоздание нового поста авторизованным пользователем.",
+        "operationId": "createPost",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties":{
+                  "postDtoString":{
+                    "type": "object",
+                    "description": "PostDtoString postDtoString"
+                  },
+                  "file":{
+                    "type": "object",
+                    "description": "MultipartFile file",
+                    "required": false
+                  }
+                }
+              }
+            }
+          },
+          "description": "Данные о посте и прикрепляемое изображение",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            },
+            "description": "Пост создан"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "BAD_REQUEST",
+                  "reason": "Incorrectly made request.",
+                  "message": "Field: title. Error: must not be blank. Value: null",
+                  "timestamp": "2022-09-07 09:10:50"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Запрос составлен некорректно"
+          }
+        },
+        "summary": "Создание нового поста",
+        "tags": [
+          "Private (User): Posts"
+        ]
+      },
+      "patch": {
+        "description": "Обновление существующего поста.",
+        "operationId": "updatePost",
+        "parameters": [
+          {
+            "description": "id обновляемого поста",
+            "in": "query",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties":{
+                  "postDtoString":{
+                    "type": "object",
+                    "description": "PostDtoString postDtoString"
+                  },
+                  "file":{
+                    "type": "object",
+                    "description": "MultipartFile file"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Данные о посте и прикрепляемое изображение",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            },
+            "description": "Пост обновлен"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "BAD_REQUEST",
+                  "reason": "Incorrectly made request.",
+                  "message": "Field: title. Error: must not be blank. Value: null",
+                  "timestamp": "2022-09-07 09:10:50"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Запрос составлен некорректно"
+          }
+        },
+        "summary": "Обновление поста",
+        "tags": [
+          "Private (User): Posts"
+        ]
+      },
+      "delete": {
+        "operationId": "deletePost",
+        "parameters": [
+          {
+            "description": "id удаляемого поста",
+            "in": "query",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пост удален"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "BAD_REQUEST",
+                  "reason": "Incorrectly made request.",
+                  "message": "Field: title. Error: must not be blank. Value: null",
+                  "timestamp": "2022-09-07 09:10:50"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Запрос составлен некорректно"
+          }
+        },
+        "summary": "Создание нового поста",
+        "tags": [
+          "Private (User): Posts"
+        ]
+      }
+    },
+    "/users/posts/{userId}": {
+      "get": {
+        "description": "Получение постов другого пользователя.",
+        "operationId": "getPosts",
+        "parameters": [
+          {
+            "description": "id пользователя",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "параметр пагинации, индекс начала страницы",
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "параметр пагинации, размер страницы",
+            "in": "query",
+            "name": "size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                  "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              }
+            },
+            "description": "Пользователь найдены, посты получены"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "BAD_REQUEST",
+                  "reason": "Incorrectly made request.",
+                  "message": "Field: title. Error: must not be blank. Value: null",
+                  "timestamp": "2022-09-07 09:10:50"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Запрос составлен некорректно"
+          }
+        },
+        "summary": "Получение постов",
+        "tags": [
+          "Private (User): Posts"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "description": "Список стектрейсов или описания ошибок",
+            "example": [],
+            "items": {
+              "type": "string",
+              "description": "Список стектрейсов или описания ошибок",
+              "example": "[]"
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "Сообщение об ошибке",
+            "example": "Only pending or canceled events can be changed"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Общее описание причины ошибки",
+            "example": "For the requested operation the conditions are not met."
+          },
+          "status": {
+            "type": "string",
+            "description": "Код статуса HTTP-ответа",
+            "example": "FORBIDDEN",
+            "enum": [
+              "100 CONTINUE",
+              "101 SWITCHING_PROTOCOLS",
+              "102 PROCESSING",
+              "103 CHECKPOINT",
+              "200 OK",
+              "201 CREATED",
+              "202 ACCEPTED",
+              "203 NON_AUTHORITATIVE_INFORMATION",
+              "204 NO_CONTENT",
+              "205 RESET_CONTENT",
+              "206 PARTIAL_CONTENT",
+              "207 MULTI_STATUS",
+              "208 ALREADY_REPORTED",
+              "226 IM_USED",
+              "300 MULTIPLE_CHOICES",
+              "301 MOVED_PERMANENTLY",
+              "302 FOUND",
+              "302 MOVED_TEMPORARILY",
+              "303 SEE_OTHER",
+              "304 NOT_MODIFIED",
+              "305 USE_PROXY",
+              "307 TEMPORARY_REDIRECT",
+              "308 PERMANENT_REDIRECT",
+              "400 BAD_REQUEST",
+              "401 UNAUTHORIZED",
+              "402 PAYMENT_REQUIRED",
+              "403 FORBIDDEN",
+              "404 NOT_FOUND",
+              "405 METHOD_NOT_ALLOWED",
+              "406 NOT_ACCEPTABLE",
+              "407 PROXY_AUTHENTICATION_REQUIRED",
+              "408 REQUEST_TIMEOUT",
+              "409 CONFLICT",
+              "410 GONE",
+              "411 LENGTH_REQUIRED",
+              "412 PRECONDITION_FAILED",
+              "413 PAYLOAD_TOO_LARGE",
+              "413 REQUEST_ENTITY_TOO_LARGE",
+              "414 URI_TOO_LONG",
+              "414 REQUEST_URI_TOO_LONG",
+              "415 UNSUPPORTED_MEDIA_TYPE",
+              "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+              "417 EXPECTATION_FAILED",
+              "418 I_AM_A_TEAPOT",
+              "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+              "420 METHOD_FAILURE",
+              "421 DESTINATION_LOCKED",
+              "422 UNPROCESSABLE_ENTITY",
+              "423 LOCKED",
+              "424 FAILED_DEPENDENCY",
+              "425 TOO_EARLY",
+              "426 UPGRADE_REQUIRED",
+              "428 PRECONDITION_REQUIRED",
+              "429 TOO_MANY_REQUESTS",
+              "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+              "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+              "500 INTERNAL_SERVER_ERROR",
+              "501 NOT_IMPLEMENTED",
+              "502 BAD_GATEWAY",
+              "503 SERVICE_UNAVAILABLE",
+              "504 GATEWAY_TIMEOUT",
+              "505 HTTP_VERSION_NOT_SUPPORTED",
+              "506 VARIANT_ALSO_NEGOTIATES",
+              "507 INSUFFICIENT_STORAGE",
+              "508 LOOP_DETECTED",
+              "509 BANDWIDTH_LIMIT_EXCEEDED",
+              "510 NOT_EXTENDED",
+              "511 NETWORK_AUTHENTICATION_REQUIRED"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Дата и время когда произошла ошибка (в формате \"yyyy-MM-dd HH:mm:ss\")",
+            "example": "2022-06-09 06:27:23"
+          }
+        },
+        "description": "Сведения об ошибке"
+      },
+      "LoginError": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Сообщение ошибки",
+            "example": "Bad credentials"
+          }
+        },
+        "description": "Ошибка авторизации"
+      },
+      "RegisterError": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Сообщение ошибки",
+            "example": "Error: Username exists"
+          }
+        },
+        "description": "Ошибка регистрации"
+      },
+      "RegisterMessage": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Сообщение регистрации",
+            "example": "User CREATED"
+          }
+        },
+        "description": "Пользователь зарегистрирован"
+      },
+      "SignUpRequestDto": {
+        "required": [
+          "username",
+          "password",
+          "roles",
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "maxLength": 100,
+            "minLength": 5,
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "exampleUserName"
+          },
+          "password": {
+            "maxLength": 100,
+            "minLength": 5,
+            "type": "string",
+            "description": "Пароль пользователя",
+            "example": "examplePassword"
+          },
+          "roles": {
+            "type": "array",
+            "description": "Роли (права) пользователя",
+            "example": ["ROLE_USER"]
+          },
+          "email": {
+            "type": "string",
+            "description": "Email пользователя",
+            "example": "exampleEmail@example.com"
+          }
+        },
+        "description": "Данные для регистрации нового пользователя"
+      },
+      "JwtResponseDto": {
+        "required": [
+          "token",
+          "type",
+          "id",
+          "username",
+          "email",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT токен",
+            "example": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTY4NTY4NjcwOCwiZXhwIjoxNjg1NjkwMzA4fQ.DVYYcKdxYsOlKrCIU3_PpU12k5NkdE6Q-DYCaWfaeQhtFWpg5o0kVd4Dsnq9kBJdTT8_KWWJ2DTHA0i9nly5eQ"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип токена",
+            "example": "Bearer"
+          },
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "username": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "exampleUserName"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email пользователя",
+            "example": "exampleEmail@example.com"
+          },
+          "roles": {
+            "type": "array",
+            "description": "Роли (права) пользователя",
+            "example": ["ROLE_USER"]
+          }
+        },
+        "description": "Данные для аутентификации нового пользователя"
+      },
+      "MessageResponseDto": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "example message"
+          }
+        },
+        "description": "Сообщение об статусе регистрации/авторизации"
+      },
+      "LoginRequestDto": {
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "exampleUserName"
+          },
+          "password": {
+            "type": "string",
+            "example": "examplePassword"
+          }
+        },
+        "description": "Данные для авторизации пользователя"
+      },
+      "UserDto": {
+        "required": [
+          "id",
+          "username",
+          "authors",
+          "friends",
+          "requestedFriends",
+          "requestingFriends"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "username": {
+            "type": "string",
+            "example": "exampleUserName"
+          },
+          "authors": {
+            "type": "array",
+            "example": [2]
+          },
+          "friends": {
+            "type": "array",
+            "example": [2]
+          },
+          "requestedFriends": {
+            "type": "array",
+            "example": [3]
+          },
+          "requestingFriends": {
+            "type": "array",
+            "example": [4]
+          }
+        },
+        "description": "Данные о пользователе"
+      },
+      "PostDto": {
+        "required": [
+          "authorId",
+          "header",
+          "text",
+          "resourceURI"
+        ],
+        "type": "object",
+        "properties": {
+          "authorId": {
+            "type": "integer",
+            "example": "1"
+          },
+          "header": {
+            "type": "string",
+            "example": "exampleHeader"
+          },
+          "text": {
+            "type": "string",
+            "example": "exampleText"
+          },
+          "resourceURI": {
+            "type": "string",
+            "example": "http://localhost:8080/file/7283bdcd-ba94-45d6-867b-754d0b70a43e.exampleImage.png"
+          }
+        },
+        "description": "Данные о посте"
+      },
+      "PostDtoString": {
+        "required": [
+          "authorId",
+          "header",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "authorId": {
+            "type": "integer",
+            "example": "1"
+          },
+          "header": {
+            "type": "string",
+            "example": "exampleHeader"
+          },
+          "text": {
+            "type": "string",
+            "example": "exampleText"
+          }
+        },
+        "description": "Данные о посте"
+      },
+      "MessageDto": {
+        "required": [
+          "id",
+          "authorId",
+          "recipientId",
+          "creationDate",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "authorId": {
+            "type": "integer",
+            "example": "1"
+          },
+          "recipientId": {
+            "type": "integer",
+            "example": "2"
+          },
+          "creationDate": {
+            "type": "string",
+            "example": "2023-06-02 11:55:15"
+          },
+          "text": {
+            "type": "string",
+            "example": "exampleText"
+          }
+        },
+        "description": "Данные о сообщении"
+      }
+    }
+  }
+}

@@ -164,7 +164,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/create",
+							"raw": "http://localhost:8080/users/posts",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -172,8 +172,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"posts",
-								"create"
+								"posts"
 							]
 						}
 					},
@@ -201,7 +200,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/create",
+							"raw": "http://localhost:8080/users/posts",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -209,8 +208,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"posts",
-								"create"
+								"posts"
 							]
 						}
 					},
@@ -229,7 +227,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/get/1",
+							"raw": "http://localhost:8080/users/posts/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -238,7 +236,6 @@
 							"path": [
 								"users",
 								"posts",
-								"get",
 								"1"
 							]
 						}
@@ -267,7 +264,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/update?postId=1",
+							"raw": "http://localhost:8080/users/posts?postId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -275,8 +272,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"posts",
-								"update"
+								"posts"
 							],
 							"query": [
 								{
@@ -301,7 +297,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/get/1",
+							"raw": "http://localhost:8080/users/posts/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -310,7 +306,6 @@
 							"path": [
 								"users",
 								"posts",
-								"get",
 								"1"
 							]
 						}
@@ -327,7 +322,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/delete?postId=1",
+							"raw": "http://localhost:8080/users/posts?postId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -335,8 +330,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"posts",
-								"delete"
+								"posts"
 							],
 							"query": [
 								{
@@ -361,7 +355,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/posts/get/1",
+							"raw": "http://localhost:8080/users/posts/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -370,7 +364,6 @@
 							"path": [
 								"users",
 								"posts",
-								"get",
 								"1"
 							]
 						}
@@ -388,7 +381,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/new?requestingFriendId=2",
+							"raw": "http://localhost:8080/users/friends/requests?requestingFriendId=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -397,8 +390,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"new"
+								"requests"
 							],
 							"query": [
 								{
@@ -416,7 +408,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get",
+							"raw": "http://localhost:8080/users/friends/requests",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -425,8 +417,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"get"
+								"requests"
 							]
 						}
 					},
@@ -438,7 +429,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get/outgoing",
+							"raw": "http://localhost:8080/users/friends/requests/outgoing",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -448,7 +439,6 @@
 								"users",
 								"friends",
 								"requests",
-								"get",
 								"outgoing"
 							]
 						}
@@ -461,7 +451,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get/incoming",
+							"raw": "http://localhost:8080/users/friends/requests/incoming",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -471,7 +461,6 @@
 								"users",
 								"friends",
 								"requests",
-								"get",
 								"incoming"
 							]
 						}
@@ -512,7 +501,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get",
+							"raw": "http://localhost:8080/users/friends/requests",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -521,8 +510,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"get"
+								"requests"
 							]
 						}
 					},
@@ -557,7 +545,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get",
+							"raw": "http://localhost:8080/users/friends/requests",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -566,8 +554,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"get"
+								"requests"
 							]
 						}
 					},
@@ -602,7 +589,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get",
+							"raw": "http://localhost:8080/users/friends/requests",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -611,8 +598,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"get"
+								"requests"
 							]
 						}
 					},
@@ -624,7 +610,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/new?requestingFriendId=1",
+							"raw": "http://localhost:8080/users/friends/requests?requestingFriendId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -633,8 +619,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"new"
+								"requests"
 							],
 							"query": [
 								{
@@ -652,7 +637,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get",
+							"raw": "http://localhost:8080/users/friends/requests",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -661,8 +646,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"get"
+								"requests"
 							]
 						}
 					},
@@ -730,7 +714,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/friends/requests/get",
+							"raw": "http://localhost:8080/users/friends/requests",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -739,8 +723,7 @@
 							"path": [
 								"users",
 								"friends",
-								"requests",
-								"get"
+								"requests"
 							]
 						}
 					},
@@ -866,7 +849,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/activity?from=0&size=5&sort=asc",
+							"raw": "http://localhost:8080/users/activity?from=0&size=5&sort=desc",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -887,7 +870,7 @@
 								},
 								{
 									"key": "sort",
-									"value": "asc"
+									"value": "desc"
 								}
 							]
 						}
@@ -902,7 +885,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0VXNlcjIiLCJpYXQiOjE2ODU2MzM1MTYsImV4cCI6MTY4NTYzNzExNn0.RNq5u-X7ZC9GkL78CvsG4SXvv4LdrcsvAtD8gs6dqkdPBrozTiNClo-NV3FsdvevLIqY4DgKyU9GPYRAyYK1eQ",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0VXNlcjIiLCJpYXQiOjE2ODU3MDkyNDIsImV4cCI6MTY4NTcxMjg0Mn0.Il4rmI6P5mhC8uHmDw89n-bVBnFkfV8biRN_Y_9FGkIvqLracChQguBo8EBsrlYgrDaqDPCAz2Ojy7LVt7Ngag",
 				"type": "string"
 			}
 		]
